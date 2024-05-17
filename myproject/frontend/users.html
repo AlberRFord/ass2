@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+<body>
+    <h1>Users</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nickname</th>
+                <th>Email</th>
+                <th>Confirmed</th>
+            </tr>
+        </thead>
+        <tbody id="usersTableBody">
+        </tbody>
+    </table>
+    <script>
+        async function fetchUsers() {
+            const response = await fetch('/users');
+            const data = await response.json();
+            const usersTableBody = document.getElementById('usersTableBody');
+            data.users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.nickname}</td>
+                    <td>${user.email}</td>
+                    <td>${user.confirmed ? 'Yes' : 'No'}</td>
+                `;
+                usersTableBody.appendChild(row);
+            });
+        }
+        fetchUsers();
+    </script>
+</body>
+</html>
